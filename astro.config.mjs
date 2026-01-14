@@ -6,4 +6,6 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
+  site: "https://gogodevelop2.github.io",
+  base: "/yoojasalon_blog",
 });
