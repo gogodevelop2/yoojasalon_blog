@@ -37,7 +37,7 @@ const categories = Array.from(
           <div class="post-list">
             {posts.map((post) => (
               <article class="post-card">
-                <a href={`/blog/${post.data.slug}`}>
+                <a href={`/blog/${post.slug}`}>
                   <h2>{post.data.title}</h2>
                   {post.data.summary ? <p>{post.data.summary}</p> : null}
                   <span class="post-meta">

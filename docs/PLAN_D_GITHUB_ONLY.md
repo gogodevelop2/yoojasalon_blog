@@ -73,7 +73,6 @@ repo-root/
 ```markdown
 ---
 title: "글 제목"
-slug: "url-slug"
 pubDate: 2026-01-12
 updatedDate: 2026-01-12
 category: "카테고리명"
@@ -217,7 +216,6 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: "제목", name: "title", widget: "string" }
-      - { label: "슬러그", name: "slug", widget: "string" }
       - { label: "발행일", name: "pubDate", widget: "datetime" }
       - { label: "수정일", name: "updatedDate", widget: "datetime", required: false }
       - { label: "카테고리", name: "category", widget: "string", required: false }
