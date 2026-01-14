@@ -1,10 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { withBase } from "../utils/paths.js";
 
 const description = "유자살롱의 기록과 실험, 공연과 노트가 모이는 아카이브.";
-const baseUrl = import.meta.env.BASE_URL;
-const basePath = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
-const withBase = (path) => `${basePath}${path.replace(/^\/+/, "")}`;
 ---
 
 <BaseLayout title="유자살롱" description={description}>

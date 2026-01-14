@@ -3,6 +3,7 @@ import "../styles/global.css";
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
 import MusicPlayer from "../components/MusicPlayer.astro";
+import { withBase } from "../utils/paths.js";
 
 const {
   title = "유자살롱",
@@ -11,9 +12,6 @@ const {
   showMusicPlayer = true,
 } = Astro.props;
 
-const baseUrl = import.meta.env.BASE_URL;
-const basePath = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
-const withBase = (path) => `${basePath}${path.replace(/^\/+/, "")}`;
 const ogImage =
   typeof image === "string" && image.startsWith("http")
     ? image

@@ -1,5 +1,15 @@
 # MASTERPLAN - 유자살롱 AI-CMS 프로젝트 (Plan C 중심)
 
+> ⚠️ **ARCHIVED** - 이 문서는 Plan C (Supabase 기반) 설계로, 현재는 사용되지 않습니다.
+>
+> **현재 플랜: Plan E (Self-Hosted OAuth)**
+> - 최신 설계: `docs/PLAN_E_SELF_HOSTED_OAUTH.md`
+> - 프로젝트 가이드: `AGENTS.md` (루트)
+>
+> 이 문서는 히스토리 참고용으로 보존됩니다.
+
+---
+
 ## 0) 목적
 - Supabase Studio/간단한 관리 화면/CLI에서 글을 관리하고, 정적 사이트로 빠르게 배포한다.
 - CLI로 데이터 조회/통계/정리 작업을 쉽게 한다.

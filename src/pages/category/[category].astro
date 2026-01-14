@@ -1,34 +1,29 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
-
-const baseUrl = import.meta.env.BASE_URL;
-const basePath = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
-const withBase = (path) => `${basePath}${path.replace(/^\/+/, "")}`;
+import { withBase } from "../../utils/paths.js";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("posts");
+  const allPosts = await getCollection("posts");
+  const publishedPosts = allPosts.filter((post) => post.data.status === "published");
   const categories = Array.from(
-    new Set(posts.map((post) => post.data.category).filter(Boolean))
+    new Set(publishedPosts.map((post) => post.data.category).filter(Boolean))
   );
 
   return categories.map((category) => ({
     params: { category },
-    props: { category },
+    props: {
+      category,
+      // NOTE: getStaticPaths에서 계산한 데이터를 props로 전달하여 이중 조회 방지
+      allCategories: categories,
+      categoryPosts: publishedPosts
+        .filter((post) => post.data.category === category)
+        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+    },
   }));
 }
 
-const { category } = Astro.props;
-const posts = (await getCollection("posts"))
-  .filter((post) => post.data.category === category && post.data.status === "published")
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-
-const allPosts = (await getCollection("posts")).filter(
-  (post) => post.data.status === "published"
-);
-const categories = Array.from(
-  new Set(allPosts.map((post) => post.data.category).filter(Boolean))
-);
+const { category, allCategories, categoryPosts } = Astro.props;
 ---
 
 <BaseLayout title={`${category} · 유자살롱`} description={`${category} 카테고리 글 모음`} showMusicPlayer={false}>
@@ -36,12 +31,12 @@ const categories = Array.from(
     <div class="blog-layout">
       <aside class="blog-sidebar" aria-label="카테고리">
         <h2 class="sidebar-title">카테고리</h2>
-        {categories.length > 0 ? (
+        {allCategories.length > 0 ? (
           <nav class="category-nav">
-            <a class={`category-link${category ? "" : " is-active"}`} href={withBase("/blog")}>
+            <a class="category-link" href={withBase("/blog")}>
               전체
             </a>
-            {categories.map((item) => (
+            {allCategories.map((item) => (
               <a
                 class={`category-link${item === category ? " is-active" : ""}`}
                 href={withBase(`/category/${item}`)}
@@ -56,11 +51,11 @@ const categories = Array.from(
       </aside>
       <div class="blog-content">
         <h1 class="section-heading">{category}</h1>
-        {posts.length === 0 ? (
+        {categoryPosts.length === 0 ? (
           <p>아직 이 카테고리에 글이 없습니다.</p>
         ) : (
           <div class="post-list">
-            {posts.map((post) => (
+            {categoryPosts.map((post) => (
               <article class="post-card">
                 <a href={withBase(`/blog/${post.slug}`)}>
                   <h2>{post.data.title}</h2>

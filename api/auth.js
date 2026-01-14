@@ -1,19 +1,18 @@
-import crypto from "node:crypto";
+/**
+ * GitHub OAuth 인증 시작점
+ * GET /api/auth → GitHub 로그인 페이지로 리다이렉트
+ *
+ * NOTE: 이 엔드포인트는 Decap CMS에서 "GitHub으로 로그인" 시 호출됩니다.
+ * state 파라미터에 nonce, timestamp, origin을 포함하여 CSRF 공격을 방지합니다.
+ */
 
-const toBase64Url = (value) => Buffer.from(value).toString("base64url");
-const sign = (value, secret) =>
-  crypto.createHmac("sha256", secret).update(value).digest("base64url");
-const getAllowedOrigins = () =>
-  (process.env.ALLOWED_ORIGINS ?? "")
-    .split(",")
-    .map((origin) => origin.trim())
-    .filter(Boolean);
-const pickOrigin = (allowedOrigins, requestedOrigin) => {
-  if (requestedOrigin && allowedOrigins.includes(requestedOrigin)) {
-    return requestedOrigin;
-  }
-  return allowedOrigins[0];
-};
+import crypto from "node:crypto";
+import {
+  getAllowedOrigins,
+  pickOrigin,
+  toBase64Url,
+  sign,
+} from "./_utils.js";
 
 export default function handler(req, res) {
   const clientId = process.env.OAUTH_CLIENT_ID;
@@ -23,6 +22,7 @@ export default function handler(req, res) {
   const requestedOrigin =
     typeof req.headers.origin === "string" ? req.headers.origin : undefined;
 
+  // 필수 환경변수 확인
   if (!clientId || !siteUrl || !stateSecret || allowedOrigins.length === 0) {
     res.status(500).send("Missing OAuth environment variables.");
     return;
@@ -34,7 +34,10 @@ export default function handler(req, res) {
     return;
   }
 
+  // NOTE: scope는 환경변수로 설정 가능. 공개 리포면 public_repo로 충분
   const scope = process.env.OAUTH_SCOPE || "public_repo";
+
+  // state: CSRF 방지용. nonce + timestamp + origin을 서명하여 전달
   const payload = {
     nonce: crypto.randomUUID(),
     ts: Date.now(),
