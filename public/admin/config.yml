@@ -6,7 +6,7 @@ backend:
   auth_endpoint: /api/auth
 
 media_folder: "public/images/uploads"
-public_folder: "/images/uploads"
+public_folder: "/yoojasalon_blog/images/uploads"
 
 locale: "ko"
 

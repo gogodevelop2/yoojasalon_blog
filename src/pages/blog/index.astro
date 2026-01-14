@@ -2,6 +2,9 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
+const baseUrl = import.meta.env.BASE_URL;
+const withBase = (path) => `${baseUrl}${path.replace(/^\/+/, "")}`;
+
 const posts = (await getCollection("posts"))
   .filter((post) => post.data.status === "published")
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -18,9 +21,9 @@ const categories = Array.from(
         <h2 class="sidebar-title">카테고리</h2>
         {categories.length > 0 ? (
           <nav class="category-nav">
-            <a class="category-link" href="/blog">전체</a>
+            <a class="category-link" href={withBase("/blog")}>전체</a>
             {categories.map((category) => (
-              <a class="category-link" href={`/category/${category}`}>
+              <a class="category-link" href={withBase(`/category/${category}`)}>
                 {category}
               </a>
             ))}
@@ -37,7 +40,7 @@ const categories = Array.from(
           <div class="post-list">
             {posts.map((post) => (
               <article class="post-card">
-                <a href={`/blog/${post.slug}`}>
+                <a href={withBase(`/blog/${post.slug}`)}>
                   <h2>{post.data.title}</h2>
                   {post.data.summary ? <p>{post.data.summary}</p> : null}
                   <span class="post-meta">

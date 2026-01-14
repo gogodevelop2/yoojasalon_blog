@@ -1,13 +1,20 @@
 ---
+const baseUrl = import.meta.env.BASE_URL;
+const withBase = (path) => `${baseUrl}${path.replace(/^\/+/, "")}`;
+
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/blog", label: "Blog" },
+  { href: withBase("/"), label: "Home" },
+  { href: withBase("/blog"), label: "Blog" },
 ];
 ---
 
 <header class="site-header">
-  <a class="site-brand" href="/" aria-label="유자살롱 홈">
-    <img class="brand-logo" src="/images/landing/yooja_logotype1.jpg" alt="유자살롱" />
+  <a class="site-brand" href={withBase("/")} aria-label="유자살롱 홈">
+    <img
+      class="brand-logo"
+      src={withBase("/images/landing/yooja_logotype1.jpg")}
+      alt="유자살롱"
+    />
   </a>
   <nav class="site-nav" aria-label="주요 메뉴">
     {links.map((link) => (

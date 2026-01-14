@@ -1,10 +1,18 @@
 ---
+const baseUrl = import.meta.env.BASE_URL;
+const withBase = (path) => `${baseUrl}${path.replace(/^\/+/, "")}`;
+
 const {
   title = "유자살롱",
   subtitle = "2009년부터 이어진 기록과 실험, 그리고 작은 공연의 흔적.",
   ctaLabel = "블로그 둘러보기",
   ctaHref = "/blog",
 } = Astro.props;
+
+const resolvedCtaHref =
+  typeof ctaHref === "string" && ctaHref.startsWith("http")
+    ? ctaHref
+    : withBase(ctaHref);
 ---
 
 <section class="hero" data-animate>
@@ -13,8 +21,8 @@ const {
     <h1 class="hero-title">{title}</h1>
     <p class="hero-subtitle">{subtitle}</p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href={ctaHref}>{ctaLabel}</a>
-      <a class="btn btn-ghost" href="/category/records">기록 보기</a>
+      <a class="btn btn-primary" href={resolvedCtaHref}>{ctaLabel}</a>
+      <a class="btn btn-ghost" href={withBase("/category/records")}>기록 보기</a>
     </div>
   </div>
   <div class="hero-media hero-placeholder" role="img" aria-label="히어로 영상 자리">

@@ -2,12 +2,14 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const description = "유자살롱의 기록과 실험, 공연과 노트가 모이는 아카이브.";
+const baseUrl = import.meta.env.BASE_URL;
+const withBase = (path) => `${baseUrl}${path.replace(/^\/+/, "")}`;
 ---
 
 <BaseLayout title="유자살롱" description={description}>
   <section class="landing-simple">
     <div class="landing-simple-inner">
-      <img src="/images/landing/cactus.jpg" alt="유자살롱 선인장 이미지" />
+      <img src={withBase("/images/landing/cactus.jpg")} alt="유자살롱 선인장 이미지" />
       <p class="landing-description">
         안녕하세요. 유자살롱(유유자적살롱)에 오신 것을 환영합니다. 유자살롱은 한국에서 최초로
         고립은둔 청소년들의 문제를 해결하기 위해 활동했던 사회적기업이며 음악하는 청년들의

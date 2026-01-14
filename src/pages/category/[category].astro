@@ -2,6 +2,9 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
+const baseUrl = import.meta.env.BASE_URL;
+const withBase = (path) => `${baseUrl}${path.replace(/^\/+/, "")}`;
+
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
   const categories = Array.from(
@@ -34,13 +37,13 @@ const categories = Array.from(
         <h2 class="sidebar-title">카테고리</h2>
         {categories.length > 0 ? (
           <nav class="category-nav">
-            <a class={`category-link${category ? "" : " is-active"}`} href="/blog">
+            <a class={`category-link${category ? "" : " is-active"}`} href={withBase("/blog")}>
               전체
             </a>
             {categories.map((item) => (
               <a
                 class={`category-link${item === category ? " is-active" : ""}`}
-                href={`/category/${item}`}
+                href={withBase(`/category/${item}`)}
               >
                 {item}
               </a>
@@ -58,7 +61,7 @@ const categories = Array.from(
           <div class="post-list">
             {posts.map((post) => (
               <article class="post-card">
-                <a href={`/blog/${post.slug}`}>
+                <a href={withBase(`/blog/${post.slug}`)}>
                   <h2>{post.data.title}</h2>
                   {post.data.summary ? <p>{post.data.summary}</p> : null}
                   <span class="post-meta">
