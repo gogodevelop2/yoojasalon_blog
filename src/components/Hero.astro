@@ -1,6 +1,7 @@
 ---
 const baseUrl = import.meta.env.BASE_URL;
-const withBase = (path) => `${baseUrl}${path.replace(/^\/+/, "")}`;
+const basePath = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
+const withBase = (path) => `${basePath}${path.replace(/^\/+/, "")}`;
 
 const {
   title = "유자살롱",
