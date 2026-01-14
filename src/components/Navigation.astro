@@ -1,0 +1,19 @@
+---
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/blog", label: "Blog" },
+];
+---
+
+<header class="site-header">
+  <a class="site-brand" href="/" aria-label="유자살롱 홈">
+    <img class="brand-logo" src="/images/landing/yooja_logotype1.jpg" alt="유자살롱" />
+  </a>
+  <nav class="site-nav" aria-label="주요 메뉴">
+    {links.map((link) => (
+      <a class="nav-link" href={link.href}>
+        {link.label}
+      </a>
+    ))}
+  </nav>
+</header>

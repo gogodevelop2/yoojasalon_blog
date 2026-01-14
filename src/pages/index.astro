@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const description = "유자살롱의 기록과 실험, 공연과 노트가 모이는 아카이브.";
+---
+
+<BaseLayout title="유자살롱" description={description}>
+  <section class="landing-simple">
+    <div class="landing-simple-inner">
+      <img src="/images/landing/cactus.jpg" alt="유자살롱 선인장 이미지" />
+      <p class="landing-description">
+        안녕하세요. 유자살롱(유유자적살롱)에 오신 것을 환영합니다. 유자살롱은 한국에서 최초로
+        고립은둔 청소년들의 문제를 해결하기 위해 활동했던 사회적기업이며 음악하는 청년들의
+        유유자적한 아지트입니다. 또한 한국에서 술집과 미용실에만 쓰이던 '살롱'을 건전한 뜻으로
+        회사이름에 쓴 최초의 조직입니다. 유자는 2015년 겨울에 운영을 멈췄지만, 그 시절의 추억을
+        간직한 이들의 일기장이자 여전히 어딘가에서 은둔고립으로 있을 청소년들에게 메시지를 건네기
+        위해 계속 페이지를 운영하고 있습니다.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

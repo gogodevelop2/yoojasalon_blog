@@ -1,0 +1,54 @@
+---
+import "../styles/global.css";
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+import MusicPlayer from "../components/MusicPlayer.astro";
+
+const {
+  title = "유자살롱",
+  description = "유자살롱의 기록과 작은 실험들이 모이는 곳.",
+  image = "/images/og-placeholder.svg",
+  showMusicPlayer = true,
+} = Astro.props;
+
+const canonicalUrl = Astro.url;
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  name: title,
+  description,
+  url: canonicalUrl,
+};
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={image} />
+    <meta property="og:locale" content="ko_KR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {canonicalUrl ? <link rel="canonical" href={canonicalUrl} /> : null}
+    <script type="application/ld+json">
+      {JSON.stringify(structuredData)}
+    </script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <Navigation />
+      <main class="main-content">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+    {showMusicPlayer ? <MusicPlayer /> : null}
+  </body>
+</html>

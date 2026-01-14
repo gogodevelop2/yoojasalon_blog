@@ -1,0 +1,29 @@
+backend:
+  name: github
+  repo: "gogodevelop2/yoojasalon_blog"
+  branch: main
+  base_url: "https://[your-vercel-app].vercel.app"
+  auth_endpoint: /api/auth
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+locale: "ko"
+
+collections:
+  - name: "posts"
+    label: "글"
+    folder: "src/content/posts"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "제목", name: "title", widget: "string" }
+      - { label: "슬러그", name: "slug", widget: "string" }
+      - { label: "발행일", name: "pubDate", widget: "datetime" }
+      - { label: "수정일", name: "updatedDate", widget: "datetime", required: false }
+      - { label: "카테고리", name: "category", widget: "string", required: false }
+      - { label: "태그", name: "tags", widget: "list", required: false }
+      - { label: "대표 이미지", name: "thumbnail", widget: "image", required: false }
+      - { label: "요약", name: "summary", widget: "text", required: false }
+      - { label: "상태", name: "status", widget: "select", options: ["draft", "published"], default: "draft" }
+      - { label: "본문", name: "body", widget: "markdown" }

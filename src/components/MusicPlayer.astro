@@ -1,0 +1,42 @@
+---
+const { src = "/music/ambient.mp3", label = "배경음악" } = Astro.props;
+---
+
+<div class="music-player" data-audio-player>
+  <button class="music-toggle" type="button" aria-pressed="false">
+    <span class="music-label">{label}</span>
+    <span class="music-state">Off</span>
+  </button>
+  <audio preload="none" src={src}></audio>
+</div>
+
+<script is:inline>
+  document.querySelectorAll("[data-audio-player]").forEach((player) => {
+    const button = player.querySelector(".music-toggle");
+    const state = player.querySelector(".music-state");
+    const audio = player.querySelector("audio");
+
+    if (!button || !state || !audio) return;
+
+    const setState = (isOn) => {
+      button.setAttribute("aria-pressed", String(isOn));
+      state.textContent = isOn ? "On" : "Off";
+    };
+
+    button.addEventListener("click", async () => {
+      if (audio.paused) {
+        try {
+          await audio.play();
+          setState(true);
+        } catch (error) {
+          state.textContent = "No audio";
+        }
+      } else {
+        audio.pause();
+        setState(false);
+      }
+    });
+
+    audio.addEventListener("ended", () => setState(false));
+  });
+</script>
