@@ -2,7 +2,7 @@ backend:
   name: github
   repo: "gogodevelop2/yoojasalon_blog"
   branch: main
-  base_url: "https://[your-vercel-app].vercel.app"
+  base_url: "https://yoojasalon-blog.vercel.app"
   auth_endpoint: /api/auth
 
 media_folder: "public/images/uploads"
